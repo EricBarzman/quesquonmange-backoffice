@@ -1,0 +1,26 @@
+.recettes {
+  display: flex;
+  flex-direction: column;
+}
+
+.recettes__title {
+  font-size: larger;
+  margin-bottom: 2rem;
+}
+
+.recettes__container {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.5rem 6rem;
+}
+
+.recettes__container__link {
+  padding: 1rem;
+  background-color: lightgrey;
+  text-align: center;
+  border-radius: 3rem;
+}
+
+.recettes__container__link:hover {
+  background-color: orange;
+}
