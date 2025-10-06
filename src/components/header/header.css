@@ -1,5 +1,6 @@
 .header {
   padding : 1.5rem;
+  border: solid 3px;
   border-style: dotted;
   border-radius: 1rem;
 }

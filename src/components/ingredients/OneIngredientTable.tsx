@@ -1,16 +1,25 @@
 'use client';
 
+import { deleteIngredient } from "@/hooks/ingredients";
 import { Ingredient } from "@/types/recettes.types"
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 function OneIngredientTable({ ingredient }: { ingredient: Ingredient }) {
 
-  const handleDelete = () => {
-    if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) {
-      return;
-    }
+  const router = useRouter();
 
-    alert("done");
+  const handleDelete = async () => {
+    if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
+
+    try {
+      await deleteIngredient(ingredient.id);
+      alert("Ingrédient supprimé");
+      router.push("/recettes/ingredients");
+      
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

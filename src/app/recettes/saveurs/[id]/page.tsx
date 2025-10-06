@@ -1,6 +1,6 @@
+import Link from "next/link";
 import OneIngredientTable from "@/components/ingredients/OneIngredientTable";
 import { getIngredientById } from "@/hooks/ingredients";
-import Link from "next/link";
 
 async function IngredientPage(props: { params: { id: string } }) {
   const { params } = props;

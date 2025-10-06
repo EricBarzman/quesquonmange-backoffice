@@ -10,3 +10,15 @@ a {
   text-decoration: none;
   color: black;
 }
+
+.button {
+  padding: 1rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  background-color: rgb(255, 213, 135);
+}
+
+.button:hover {
+  background-color: orange; 
+  transition: 300ms;
+}

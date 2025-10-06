@@ -9,3 +9,9 @@ export type Complexite = {
   created_at: Date;
   label: string;
 }
+
+export type Saveur = {
+  id: number;
+  label: string;
+  created_at: Date;
+}

@@ -6,7 +6,9 @@ L'application culinaire !
 ## Technologies
 
 Backoffice : `Next.JS`
+
 Front : `React Native`
+
 Serveur : `Node.JS`
 
 BDD : `Supabase`
