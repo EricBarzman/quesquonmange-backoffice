@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 
 import { Saveur } from "@/types/recettes.types"
 
+import './saveurs-table.css'
+
 
 export default function OneSaveurTable({ saveur }: { saveur: Saveur }) {
 
@@ -24,25 +26,31 @@ export default function OneSaveurTable({ saveur }: { saveur: Saveur }) {
   };
 
   return (
-    <>
-      <table className="onesaveur__table__table">
+    <div className="saveurs__container">
+      <table className="saveurs__one-saveur__table">
         <thead>
           <tr>
             <th className="saveurs__table__cell">ID</th>
             <th className="saveurs__table__cell">Label</th>
+            <th className="saveurs__table__cell">Created_at</th>
           </tr>
         </thead>
         <tbody>
           <tr key={saveur.id}>
             <td className="saveurs__table__cell">{saveur.id}</td>
             <td className="saveurs__table__cell">{saveur.label}</td>
+            {/* Convertit la date en string */}
+            <td className="saveurs__table__cell">{(new Date(saveur.created_at)).toDateString()}</td>
           </tr>
         </tbody>
       </table>
-      <Link className="saveurs__table__editbtn" href={`/recettes/saveurs/edit/${saveur.id}`}>
-        Editer
-      </Link>
-      <div className="saveurs__table__deleteBtn" onClick={handleDelete}>Supprimer</div>
-    </>
+      <div className="saveurs__one-saveur__options">
+        <Link className="saveurs__table__editbtn" href={`/recettes/saveurs/edit/${saveur.id}`}>
+          Editer
+        </Link>
+        <div className="saveurs__table__deleteBtn" onClick={handleDelete}>Supprimer</div>
+        <Link className="button" href="/recettes/saveurs">Retour aux saveurs</Link>
+      </div>
+    </div>
   )
 }

@@ -34,7 +34,7 @@ export const createIngredient = async (
   const slug = slugify(label);
 
   const supabase = createClient();
-  const { data, error } = await (await supabase)
+  const { error } = await (await supabase)
     .from('ingredient')
     .insert({
       label,

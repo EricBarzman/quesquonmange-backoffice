@@ -5,11 +5,53 @@
   margin-bottom: 3rem;
 }
 
-.onesaveur__table__table {
+.saveurs__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin: auto;
+}
+
+.saveurs__title {  
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Form */
+
+.saveur__form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.saveur__form__label {
+  margin-bottom: 0.5rem;
+  font-size: small;
+}
+
+.saveur__form__field {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+}
+
+.saveurs__one-saveur__table {
   text-align: left;
   border-width: 1px;
   border-color: lightgrey;
   margin-bottom: 3rem;
+}
+
+/* Table */
+
+.saveurs__one-saveur__options {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 30%;
 }
 
 .saveurs__table__cell {
@@ -52,12 +94,12 @@
 .saveurs__table__deleteBtn {
   padding: 1rem;
   border-radius: 3rem;
-  background-color: rgb(255, 135, 219);
+  background-color: rgb(252, 101, 101);
   cursor: pointer;
   margin-bottom: 1rem;
 }
 
 .saveurs__table__deleteBtn:hover {
-  background-color: rgb(199, 24, 176);
+  background-color: rgb(199, 24, 24);
   transition: 300ms;
 }
