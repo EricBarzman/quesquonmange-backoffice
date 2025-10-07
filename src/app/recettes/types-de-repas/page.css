@@ -1,0 +1,12 @@
+.categories {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.categories__btn {
+  margin: auto;
+  width: 35%;
+  text-align: center;
+}
