@@ -1,0 +1,12 @@
+.complexites {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+}
+
+.complexites__btn {
+  margin: auto;
+  width: 35%;
+  text-align: center;
+}

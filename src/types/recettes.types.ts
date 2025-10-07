@@ -5,7 +5,7 @@ export type Ingredient = {
 }
 
 export type Complexite = {
-  id: number;
+  id: number | null;
   created_at: string;
   label: string;
 }
