@@ -4,6 +4,12 @@ export type Ingredient = {
   description: string;
 }
 
+export type Couleur_plat = {
+  id: number | null;
+  created_at: string;
+  label: string;
+}
+
 export type Complexite = {
   id: number | null;
   created_at: string;
