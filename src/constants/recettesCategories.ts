@@ -6,4 +6,5 @@ export const recettesCatList = [
   'complexites',
   'couleurs plat',
   'regimes alimentaire',
+  'types de plat',
 ]
