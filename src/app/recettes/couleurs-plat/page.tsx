@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import './couleurs-plat.css'
 import CouleursPlatTable from '@/components/couleur-plat/couleurs-plat-table';
 import { getCouleursPlat } from '@/hooks/couleurs_plat';
 

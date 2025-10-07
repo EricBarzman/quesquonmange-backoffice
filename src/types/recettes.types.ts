@@ -10,6 +10,12 @@ export type Couleur_plat = {
   label: string;
 }
 
+export type Regime_alimentaire = {
+  id: number | null;
+  created_at: string;
+  label: string;
+}
+
 export type Complexite = {
   id: number | null;
   created_at: string;
