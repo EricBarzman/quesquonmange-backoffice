@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Saveur } from "@/types/recettes.types"
 
 import './saveurs-table.css'
+import { deleteSaveur } from "@/hooks/saveurs";
 
 
 export default function OneSaveurTable({ saveur }: { saveur: Saveur }) {
@@ -16,7 +17,7 @@ export default function OneSaveurTable({ saveur }: { saveur: Saveur }) {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
 
     try {
-      // await deletesaveur(saveur.id);
+      await deleteSaveur(saveur.id!);
       alert("Saveur supprimée");
       router.push("/recettes/saveurs");
       
