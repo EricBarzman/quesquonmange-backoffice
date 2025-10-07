@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { INTENT } from "@/app/constants/editIntent";
+import { INTENT } from "@/constants/editIntent";
 
 import { createSaveur, updateSaveur } from "@/hooks/saveurs";
 import { Saveur } from "@/types/recettes.types";

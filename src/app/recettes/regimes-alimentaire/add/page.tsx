@@ -1,6 +1,6 @@
 'use client';
 
-import { INTENT } from '@/app/constants/editIntent';
+import { INTENT } from '@/constants/editIntent';
 import RegimeForm from '@/components/regime/regime-form';
 import { Regime_alimentaire } from '@/types/recettes.types';
 

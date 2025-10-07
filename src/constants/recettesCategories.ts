@@ -2,7 +2,7 @@ export const recettesCatList = [
   "ingredients",
   "recettes",
   "saveurs",
-  "moment de la journee",
+  "moments journee",
   'complexites',
   'couleurs plat',
   'regimes alimentaire',

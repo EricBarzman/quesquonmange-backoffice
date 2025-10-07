@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { createIngredient, updateIngredient } from '@/hooks/ingredients';
 import { Ingredient } from '@/types/recettes.types';
-import { INTENT } from '@/app/constants/editIntent';
+import { INTENT } from '@/constants/editIntent';
 
 interface Inputs {
   label: string;

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { recettesCatList } from "../constants/recettesCategories"
+import { recettesCatList } from "../../constants/recettesCategories"
 
 import './page.css';
 import slugify from "@/utils/slugify";

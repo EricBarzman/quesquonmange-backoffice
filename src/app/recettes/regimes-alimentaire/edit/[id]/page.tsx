@@ -1,4 +1,4 @@
-import { INTENT } from "@/app/constants/editIntent"
+import { INTENT } from "@/constants/editIntent"
 import RegimeForm from "@/components/regime/regime-form"
 import { getRegimeAlimentaireById } from "@/hooks/regimes_alimentaire"
 

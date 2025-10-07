@@ -1,4 +1,4 @@
-import { INTENT } from "@/app/constants/editIntent"
+import { INTENT } from "@/constants/editIntent"
 import ComplexiteForm from "@/components/complexites/complexite-form"
 import { getComplexiteById } from "@/hooks/complexites"
 import { Complexite } from "@/types/recettes.types";

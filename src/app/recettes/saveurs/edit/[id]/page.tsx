@@ -1,4 +1,4 @@
-import { INTENT } from "@/app/constants/editIntent"
+import { INTENT } from "@/constants/editIntent"
 import SaveurForm from "@/components/saveurs/saveur-form"
 import { getSaveurById } from "@/hooks/saveurs"
 import { Saveur } from "@/types/recettes.types";

@@ -1,21 +1,21 @@
 'use client';
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { INTENT } from "@/constants/editIntent";
-import './couleur-plat-table.css'
+import './moment.css'
 
-import { createCouleurPlat, updateCouleurPlat } from "@/hooks/couleurs_plat";
-import { Couleur_plat } from "@/types/recettes.types";
+import { createMomentAlimentaire, updateMomentAlimentaire } from "@/hooks/moment_journees";
+import { Moment_journee } from "@/types/recettes.types";
+import BackBtn from "../backBtn/BackBtn";
 
 interface Inputs {
   label: string;
 }
 
-export default function CouleurPlatForm(
-  { cat, intent }: { cat : Couleur_plat, intent: string }
+export default function MomentForm(
+  { cat, intent }: { cat : Moment_journee, intent: string }
 ) {
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
 
@@ -26,8 +26,8 @@ export default function CouleurPlatForm(
     switch (intent) {
       case (INTENT.create):
         try {
-          await createCouleurPlat({ label });
-          router.push("/recettes/couleurs-plat")
+          await createMomentAlimentaire({ label });
+          router.push("/recettes/moments-journee")
 
         } catch (error) {
           console.error(error);
@@ -35,8 +35,8 @@ export default function CouleurPlatForm(
 
       case (INTENT.update):
         try {
-          await updateCouleurPlat({ id: cat.id!, label });
-          router.push("/recettes/couleurs-plat");
+          await updateMomentAlimentaire({ id: cat.id!, label });
+          router.push("/recettes/moments-journee");
 
         } catch (error) {
           console.error(error);
@@ -46,19 +46,19 @@ export default function CouleurPlatForm(
 
   return (
     <div className="cats__container">
-      <h3 className='cats__title'>{intent === 'create' ? 'Ajouter' : 'Editer'} une couleur</h3>
+      <h3 className='cats__title'>{intent === 'create' ? 'Ajouter' : 'Editer'} un moment de la journée</h3>
       <form className="cat__form" onSubmit={handleSubmit(onSubmit)}>
         <label className='cat__form__label'>Label</label>
         <input
           className="cat__form__field"
           type="text"
-          placeholder="Jaune, ocre..."
+          placeholder="Petit-déjeuner..."
           {...register("label")}
           defaultValue={cat.label}
         />
         <input type="submit" className="cat__form__field" />
       </form>
-      <Link className="button cats__btn" href="/recettes/cats-plat">Retour aux couleurs</Link>
+      <BackBtn url="moments-journee" label="moments de la journée" />
     </div>
   )
 }

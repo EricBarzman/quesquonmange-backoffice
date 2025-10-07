@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { INTENT } from '@/app/constants/editIntent';
+import { INTENT } from '@/constants/editIntent';
 import { getIngredientById } from '@/hooks/ingredients';
 
 import IngredientForm from '@/components/ingredients/IngredientForm';

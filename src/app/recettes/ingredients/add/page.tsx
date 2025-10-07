@@ -1,6 +1,6 @@
 'use client';
 
-import { INTENT } from '@/app/constants/editIntent';
+import { INTENT } from '@/constants/editIntent';
 import IngredientForm from '@/components/ingredients/IngredientForm'
 import { Ingredient } from '@/types/recettes.types';
 import Link from 'next/link'
