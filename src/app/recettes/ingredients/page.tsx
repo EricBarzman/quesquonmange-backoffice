@@ -1,12 +1,15 @@
 import Link from 'next/link';
+import IngredientsTable from '@/components/ingredients/ingredients-table';
+import { getIngredients } from '@/hooks/ingredients';
 
-async function IngredientsPage() {
+export default async function IngredientsPage() {
+
+  const ingredients = await getIngredients();
 
   return (
-    <div>
-      <Link href="/recettes/ingredients/add" className='ingredients__button'>Ajouter un ingrédient</Link>
-    </div>
+    <section className='categories'>
+        <IngredientsTable cats={ingredients} />  
+        <Link href="/recettes/ingredients/add" className='button categories__btn'>Ajouter un ingrédient</Link>
+    </section>
   )
 }
-
-export default IngredientsPage

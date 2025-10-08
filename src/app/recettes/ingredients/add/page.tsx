@@ -1,24 +1,18 @@
 'use client';
 
 import { INTENT } from '@/constants/editIntent';
-import IngredientForm from '@/components/ingredients/IngredientForm'
+import IngredientForm from '@/components/ingredients/ingredient-form';
 import { Ingredient } from '@/types/recettes.types';
-import Link from 'next/link'
 
 const ingredient : Ingredient = {
-  id: 0,
+  id: null,
   label: '',
-  description: ''
+  description: '',
+  created_at: ''
 }
 
-function AddIngredient() {
+export default function AddIngredient() {
   return (
-    <div>
-      <h3 className='addingredient__title'>Ajouter un ingrédient</h3>
-      <IngredientForm ingredient={ingredient} id={0} intent={INTENT.create} />
-      <Link className="ingredients__button" href="/recettes/ingredients">Retour au tableau</Link>
-    </div>
+      <IngredientForm cat={ingredient} intent={INTENT.create}/>
   )
 }
-
-export default AddIngredient

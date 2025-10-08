@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Couleur_plat } from "@/types/recettes.types"
-import { deleteCouleurPlat } from "@/hooks/couleurs_plat";
+import { Ingredient } from "@/types/recettes.types"
+import { deleteIngredient } from "@/hooks/ingredients";
 
-import './couleur-plat-table.css'
+import './ingredient.css'
 
-export default function OneCouleurPlatTable({ cat }: { cat: Couleur_plat }) {
+export default function OneIngredientTable({ cat }: { cat: Ingredient }) {
 
   const router = useRouter();
 
@@ -16,9 +16,9 @@ export default function OneCouleurPlatTable({ cat }: { cat: Couleur_plat }) {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
 
     try {
-      await deleteCouleurPlat(cat.id!);
+      await deleteIngredient(cat.id!);
       alert("Couleur supprimée");
-      router.push("/recettes/couleurs-plat");
+      router.push("/recettes/ingredients");
       
     } catch (error) {
       console.error(error);
@@ -32,6 +32,7 @@ export default function OneCouleurPlatTable({ cat }: { cat: Couleur_plat }) {
           <tr>
             <th className="cats__table__cell">ID</th>
             <th className="cats__table__cell">Label</th>
+            <th className="cats__table__cell">Desc.</th>
             <th className="cats__table__cell">Created_at</th>
           </tr>
         </thead>
@@ -39,17 +40,18 @@ export default function OneCouleurPlatTable({ cat }: { cat: Couleur_plat }) {
           <tr key={cat.id}>
             <td className="cats__table__cell">{cat.id}</td>
             <td className="cats__table__cell">{cat.label}</td>
+            <td className="cats__table__cell">{cat.description}</td>
             {/* Convertit la date en string */}
             <td className="cats__table__cell">{(new Date(cat.created_at)).toDateString()}</td>
           </tr>
         </tbody>
       </table>
       <div className="cats__one-cat__options">
-        <Link className="cats__table__editbtn" href={`/recettes/couleurs-plat/edit/${cat.id}`}>
+        <Link className="cats__table__editbtn" href={`/recettes/ingredients/edit/${cat.id}`}>
           Editer
         </Link>
         <div className="cats__table__deleteBtn" onClick={handleDelete}>Supprimer</div>
-        <Link className="button" href="/recettes/couleurs-plat">Retour aux couleurs</Link>
+        <Link className="button" href="/recettes/ingredients">Retour aux ingrédients</Link>
       </div>
     </div>
   )

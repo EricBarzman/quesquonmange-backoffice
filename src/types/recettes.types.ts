@@ -1,7 +1,8 @@
 export type Ingredient = {
-  id: number;
+  id: number | null;  // null, to pass an empty object for create pages
   label: string;
   description: string;
+  created_at: string;
 }
 
 export type Couleur_plat = {

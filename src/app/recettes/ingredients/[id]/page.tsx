@@ -1,17 +1,11 @@
-import OneIngredientTable from "@/components/ingredients/OneIngredientTable";
+import OneIngredientTable from "@/components/ingredients/one-ingredient-table";
 import { getIngredientById } from "@/hooks/ingredients";
-import Link from "next/link";
 
-async function IngredientPage(props: { params: { id: string } }) {
-  const { params } = props;
-  const ingredient = await getIngredientById(parseInt(await params.id));
+export default async function IngredientPage({ params }: { params: { id: string } }) {
+  const id = (await params).id
+  const ingredient = await getIngredientById(parseInt(id));
 
   return (
-    <div className="ingredients__right__container">
-      <OneIngredientTable ingredient={ingredient} />
-      <Link className="ingredients__button" href="/recettes/ingredients">Retour au tableau</Link>
-    </div>
+    <OneIngredientTable cat={ingredient} />
   )
 }
-
-export default IngredientPage
