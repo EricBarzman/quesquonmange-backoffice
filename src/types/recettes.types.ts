@@ -55,7 +55,7 @@ export type Repas = {
 }
 
 export interface PlatSimple {
-  id: number | null;
+  id: number;
   created_at : string;
   label: string;
   slug: string;
@@ -65,7 +65,7 @@ export interface PlatSimple {
 }
 
 export interface PlatToSend {
-  id: number | null;
+  id: number;
   created_at : string;
   label: string;
   slug: string;
@@ -75,7 +75,7 @@ export interface PlatToSend {
 }
 
 export interface PlatComplet {
-  id: number | null;
+  id: number;
   created_at : string;
   label: string;
   slug: string;

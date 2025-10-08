@@ -33,6 +33,7 @@ export const createPlat = async ({
   cuissons,
   saisons,
   type_plat_id,
+  list_repas_id,
 }: {
   label: string,
   cuissons: string[] | null;
@@ -40,7 +41,7 @@ export const createPlat = async ({
   type_plat_id: number;
   // couleurs_plat_id: number[];
   //ingredients: number[];
-  // moments_journee_id: number[];
+  list_repas_id: number[];
   // regimes_alimentaire_id: number[];
   // saveurs_id: number[];
   // ustensils_id: number[];
@@ -48,14 +49,6 @@ export const createPlat = async ({
   const slug = slugify(label);
   if (cuissons!.length === 0) cuissons = null;
   if (saisons!.length === 0) saisons = null;
-
-  // console.log({
-  //     label,
-  //     slug,
-  //     cuissons,
-  //     saisons,
-  //     type_plat: type_plat_id
-  //   })
 
   const supabase = createClient();
   const { data, error } = await (await supabase)
@@ -68,17 +61,24 @@ export const createPlat = async ({
       type_plat: type_plat_id
     })
     .select('*')
+    .single()
 
-  console.log("data");
-  console.log(data);
+  if (error) throw new Error(`Error creating item: ${error}`);
+  if (!data) throw new Error(`Error creating item`);
 
-  // if (error) throw new Error(`Error creating item: ${error}`);
+  const plat_id = data.id;
 
-  // console.log(data);
+  for (const repas_id of list_repas_id) {
+    const { error } = await (await supabase)
+      .from('plat_fits_repas')
+      .insert({
+        repas_id,
+        plat_id,
+      })
+      .select('*')
 
-  // const { error } = await (await supabase)
-  //   .from('plat_has_couleurs')
-  //   .insert({ plat_id: id, couleur_id })
+    if (error) throw new Error(`Error creating item: ${error}`);
+  }
 }
 
 export const updatePlat = async (

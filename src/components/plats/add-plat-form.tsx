@@ -55,17 +55,12 @@ export default function AddPlatForm({
   }) => {
 
     try {
-      console.log({
-        label,
-        cuissons,
-        saisons,
-        type_plat_id,
-      })
       await createPlat({
         label,
         cuissons,
         saisons,
         type_plat_id,
+        list_repas_id : chosenRepas.map(repas => repas.id!)
       });
       // router.push("/recettes/plats")
 
