@@ -1,3 +1,4 @@
+
 export type Ingredient = {
   id: number | null;  // null, to pass an empty object for create pages
   label: string;
@@ -53,7 +54,27 @@ export type Moment_journee = {
   created_at: string;
 }
 
-export interface Plat {
+export interface PlatSimple {
+  id: number | null;
+  created_at : string;
+  label: string;
+  slug: string;
+  saison: 'printemps' | 'été' | 'automne' | 'hiver';
+  cuisson: 'cru' | 'cuit' | 'mi-cuit';
+  type_plat: number;
+}
+
+export interface PlatToSend {
+  id: number | null;
+  created_at : string;
+  label: string;
+  slug: string;
+  saison: 'printemps' | 'été' | 'automne' | 'hiver';
+  cuisson: 'cru' | 'cuit' | 'mi-cuit';
+  type_plat: number;
+}
+
+export interface PlatComplet {
   id: number | null;
   created_at : string;
   label: string;
@@ -61,9 +82,6 @@ export interface Plat {
   saison: 'printemps' | 'été' | 'automne' | 'hiver';
   cuisson: 'cru' | 'cuit' | 'mi-cuit';
   type_plat: Type_plat;
-}
-
-export interface PlatComplet extends Plat {
   ingredients : Ingredient[];
   moments_journee: Moment_journee[];
   couleurs_plat: Couleur_plat[];

@@ -8,5 +8,6 @@ export const recettesCatList = [
   'regimes alimentaire',
   'types de plat',
   'ustensils',
-  'types de repas'
+  'types de repas',
+  'plats',
 ]

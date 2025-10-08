@@ -1,0 +1,113 @@
+.cats__table {
+  text-align: left;
+  border-width: 1px;
+  border-color: lightgrey;
+  margin-bottom: 3rem;
+}
+
+.cats__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin: auto;
+}
+
+.cats__title {  
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+/* Form */
+
+.cat__form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.cat__form__label {
+  margin-bottom: 0.5rem;
+  font-size: small;
+}
+
+.cat__form__choices {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.cat__form__field {
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  border-radius: 1rem;
+}
+
+.cats__one-cat__table {
+  text-align: left;
+  border-width: 1px;
+  border-color: lightgrey;
+  margin-bottom: 3rem;
+}
+
+/* Table */
+
+.cats__one-cat__options {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  width: 30%;
+}
+
+.cats__table__cell {
+  padding: 0.5rem;
+  text-align: left;
+  border: solid;
+  border-width: 1px;
+  border-color: lightgrey;
+}
+
+.cats__table__cell--link:hover {
+  background-color: orange;
+  transition: 300ms;
+  cursor: pointer;
+}
+
+.cats__table__cell--delete {
+  background-color: rgb(196, 74, 74);
+  cursor: pointer;
+}
+
+.cats__table__cell--delete:hover {
+  background-color: rgb(255, 0, 0);
+  transition: 300ms;
+}
+
+.cats__table__editbtn {
+  padding: 1rem;
+  border-radius: 3rem;
+  background-color: rgb(135, 255, 135);
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.cats__table__editbtn:hover {
+  background-color: rgb(70, 161, 70);
+  transition: 300ms;
+}
+
+.cats__table__deleteBtn {
+  padding: 1rem;
+  border-radius: 3rem;
+  background-color: rgb(252, 101, 101);
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.cats__table__deleteBtn:hover {
+  background-color: rgb(199, 24, 24);
+  transition: 300ms;
+}
