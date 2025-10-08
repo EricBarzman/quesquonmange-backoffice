@@ -10,7 +10,7 @@ import './plat.css'
 import { Cuisson, CUISSONS } from "@/constants/cuissons";
 import { Saison, SAISONS } from "@/constants/saisons";
 
-import { Repas, Type_plat } from "@/types/recettes.types";
+import { Couleur_plat, Repas, Type_plat } from "@/types/recettes.types";
 import { createPlat } from "@/hooks/plats";
 
 
@@ -18,10 +18,9 @@ interface Inputs {
   label: string;
   saisons: Saison[];
   cuissons: Cuisson[];
-  type_plat_id: number;
   ingredients_id: number[];
+  type_plat_id: number;
   repas_id: number[];
-  couleurs_plat_id: number[];
   regimes_alimentaire_id: number[];
   saveurs_id: number[];
   ustensils_id: number[];
@@ -31,12 +30,15 @@ interface Inputs {
 export default function AddPlatForm({
   types_plat,
   repas,
+  couleurs
 }: {
   types_plat: Type_plat[],
-  repas: Repas[]
+  repas: Repas[],
+  couleurs: Couleur_plat[],
 }) {
 
   const [chosenRepas, setChosenRepas] = useState<Repas[]>([]);
+  const [chosenCouleurs, setChosenCouleurs] = useState<Couleur_plat[]>([]);
   const [cuissons, setCuissons] = useState<Cuisson[]>([])
   const [saisons, setSaisons] = useState<Saison[]>([])
   
@@ -45,6 +47,11 @@ export default function AddPlatForm({
   function handleRepasChange(e: any) {
     const targetRepas = repas.find(rep => rep.id === parseInt(e.target.value));
     if (targetRepas) setChosenRepas([...chosenRepas, targetRepas])
+  }
+
+  function handleCouleurChange(e: any) {
+    const targetCouleur = couleurs.find(it => it.id === parseInt(e.target.value));
+    if (targetCouleur) setChosenCouleurs([...chosenCouleurs, targetCouleur])
   }
 
   const router = useRouter();
@@ -60,7 +67,8 @@ export default function AddPlatForm({
         cuissons,
         saisons,
         type_plat_id,
-        list_repas_id : chosenRepas.map(repas => repas.id!)
+        list_repas_id : chosenRepas.map(repas => repas.id!),
+        couleurs_id : chosenCouleurs.map(couleur => couleur.id!),
       });
       // router.push("/recettes/plats")
 
@@ -183,6 +191,36 @@ export default function AddPlatForm({
                 className="cat__form__multiple-choices__option"
               >
                 {repas.label[0].toUpperCase() + repas.label.substring(1)}
+              </button>
+            ))}
+          </ul>
+        </div>
+
+        {/* Couleurs */}
+        <div className="cat__form__container">
+          <label className='cat__form__label'>Couleurs</label>
+          <select
+            defaultValue={""}
+            onChange={handleCouleurChange}
+            className="cat__form__field"
+          >
+            <option disabled value="">-- Choisir une couleur --</option>
+            {couleurs.map(couleur => (
+              <option key={couleur.id} disabled={chosenCouleurs.includes(couleur)} value={couleur.id!}>
+                {couleur.label[0].toUpperCase() + couleur.label.substring(1)}
+              </option>
+            ))}
+          </select>
+          
+          <ul className="cat__form__multiple-choices">
+            {chosenCouleurs.map(couleur => (
+              <button
+                value={couleur.id!}
+                onClick={(e: any) => setChosenCouleurs(chosenCouleurs.filter(it => it.id !== parseInt(e.target.value)))}
+                key={couleur.label}
+                className="cat__form__multiple-choices__option"
+              >
+                {couleur.label[0].toUpperCase() + couleur.label.substring(1)}
               </button>
             ))}
           </ul>

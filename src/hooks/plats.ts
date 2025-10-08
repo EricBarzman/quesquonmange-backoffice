@@ -34,12 +34,13 @@ export const createPlat = async ({
   saisons,
   type_plat_id,
   list_repas_id,
+  couleurs_id,
 }: {
   label: string,
   cuissons: string[] | null;
   saisons: string[] | null;
   type_plat_id: number;
-  // couleurs_plat_id: number[];
+  couleurs_id: number[];
   //ingredients: number[];
   list_repas_id: number[];
   // regimes_alimentaire_id: number[];
@@ -68,6 +69,7 @@ export const createPlat = async ({
 
   const plat_id = data.id;
 
+  // Plat fits repas
   for (const repas_id of list_repas_id) {
     const { error } = await (await supabase)
       .from('plat_fits_repas')
@@ -75,7 +77,18 @@ export const createPlat = async ({
         repas_id,
         plat_id,
       })
-      .select('*')
+
+    if (error) throw new Error(`Error creating item: ${error}`);
+  }
+
+  // Plat has couleurs
+  for (const couleur_id of couleurs_id) {
+    const { error } = await (await supabase)
+      .from('plat_has_couleurs')
+      .insert({
+        couleur_id,
+        plat_id,
+      })
 
     if (error) throw new Error(`Error creating item: ${error}`);
   }
