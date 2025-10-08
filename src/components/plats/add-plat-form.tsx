@@ -10,7 +10,7 @@ import './plat.css'
 import { Cuisson, CUISSONS } from "@/constants/cuissons";
 import { Saison, SAISONS } from "@/constants/saisons";
 
-import { Moment_journee, Type_plat } from "@/types/recettes.types";
+import { Repas, Type_plat } from "@/types/recettes.types";
 import { createPlat } from "@/hooks/plats";
 
 
@@ -20,7 +20,7 @@ interface Inputs {
   cuissons: Cuisson[];
   type_plat_id: number;
   ingredients_id: number[];
-  moments_journee_id: number[];
+  repas_id: number[];
   couleurs_plat_id: number[];
   regimes_alimentaire_id: number[];
   saveurs_id: number[];
@@ -29,37 +29,23 @@ interface Inputs {
 
 
 export default function AddPlatForm({
-  all_types_plat,
-  all_moments_journee
+  types_plat,
+  repas,
 }: {
-  all_types_plat: Type_plat[],
-  all_moments_journee: Moment_journee[]
+  types_plat: Type_plat[],
+  repas: Repas[]
 }) {
 
-  const [moments_journee_id, set_moments_journee_id] = useState<number[]>([]);
+  const [chosenRepas, setChosenRepas] = useState<Repas[]>([]);
   const [cuissons, setCuissons] = useState<Cuisson[]>([])
   const [saisons, setSaisons] = useState<Saison[]>([])
-  const [moments_journee, set_moments_journee] = useState<Moment_journee[]>([])
-
-  function handleMomentChange(e: any) {
-    // Remove
-    if (!e.target.checked) {
-      set_moments_journee_id(moments_journee_id.filter(id => id !== e.target.value))
-    }
-    // Add
-    if (e.target.checked)
-      set_moments_journee_id([...moments_journee_id, e.target.value])
-  }
-
-  function handleSaisonChange(e: any) {
-    if (!e.target.checked)
-      setSaisons(saisons.filter(id => id !== e.target.value))
-
-    if (e.target.checked)
-      setSaisons([...saisons, e.target.value])
-  }
-
+  
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
+
+  function handleRepasChange(e: any) {
+    const targetRepas = repas.find(rep => rep.id === parseInt(e.target.value));
+    if (targetRepas) setChosenRepas([...chosenRepas, targetRepas])
+  }
 
   const router = useRouter();
 
@@ -169,7 +155,7 @@ export default function AddPlatForm({
           <label className='cat__form__label'>Type de plat</label>
           <select {...register("type_plat_id")} className="cat__form__field">
             <option disabled value="">-- Choisir --</option>
-            {all_types_plat.map(plat => (
+            {types_plat.map(plat => (
               <option key={plat.id} value={plat.id!}>
                 {plat.label[0].toUpperCase() + plat.label.substring(1)}
               </option>
@@ -177,31 +163,31 @@ export default function AddPlatForm({
           </select>
         </div>
 
-        {/* Moments de la journée */}
+        {/* Repas */}
         <div className="cat__form__container">
           <label className='cat__form__label'>Quel repas ?</label>
           <select
             defaultValue={""}
-            onChange={(e: any) => setSaisons([...saisons, e.target.value])}
+            onChange={handleRepasChange}
             className="cat__form__field"
           >
             <option disabled value="">-- Choisir un repas --</option>
-            {SAISONS.map(saison => (
-              <option disabled={saisons.includes(saison)} value={saison}>
-                {saison[0].toUpperCase() + saison.substring(1)}
+            {repas.map(oneRepas => (
+              <option key={oneRepas.id} disabled={chosenRepas.includes(oneRepas)} value={oneRepas.id!}>
+                {oneRepas.label[0].toUpperCase() + oneRepas.label.substring(1)}
               </option>
             ))}
           </select>
           
           <ul className="cat__form__multiple-choices">
-            {saisons.map(saison => (
+            {chosenRepas.map(repas => (
               <button
-                value={saison}
-                onClick={(e: any) => setSaisons(saisons.filter(label => label !== e.target.value))}
-                key={saison}
+                value={repas.id!}
+                onClick={(e: any) => setChosenRepas(chosenRepas.filter(rep => rep.id !== parseInt(e.target.value)))}
+                key={repas.label}
                 className="cat__form__multiple-choices__option"
               >
-                {saison[0].toUpperCase() + saison.substring(1)}
+                {repas.label[0].toUpperCase() + repas.label.substring(1)}
               </button>
             ))}
           </ul>
