@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Moment_journee } from "@/types/recettes.types"
-import { deleteMomentAlimentaire } from "@/hooks/moment_journees";
+import { Repas } from "@/types/recettes.types"
+import { deleteRepas } from "@/hooks/repas";
 
-import './moment.css'
+import './repas.css'
 
-export default function OneMomentTable({ cat }: { cat: Moment_journee }) {
+export default function OneRepasTable({ cat }: { cat: Repas }) {
 
   const router = useRouter();
 
@@ -16,9 +16,9 @@ export default function OneMomentTable({ cat }: { cat: Moment_journee }) {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
 
     try {
-      await deleteMomentAlimentaire(cat.id!);
-      alert("Moment supprimé");
-      router.push("/recettes/moments-journee");
+      await deleteRepas(cat.id!);
+      alert("Item supprimé");
+      router.push("/recettes/repas");
       
     } catch (error) {
       console.error(error);
@@ -40,16 +40,21 @@ export default function OneMomentTable({ cat }: { cat: Moment_journee }) {
             <td className="cats__table__cell">{cat.id}</td>
             <td className="cats__table__cell">{cat.label}</td>
             {/* Convertit la date en string */}
-            <td className="cats__table__cell">{(new Date(cat.created_at)).toDateString()}</td>
+            <td className="cats__table__cell">
+              {(new Date(cat.created_at)).toDateString()}
+            </td>
           </tr>
         </tbody>
       </table>
       <div className="cats__one-cat__options">
-        <Link className="cats__table__editbtn" href={`/recettes/moments-journee/edit/${cat.id}`}>
+        <Link
+          className="cats__table__editbtn"
+          href={`/recettes/repas/edit/${cat.id}`}
+        >
           Editer
         </Link>
         <div className="cats__table__deleteBtn" onClick={handleDelete}>Supprimer</div>
-        <Link className="button" href="/recettes/moments-journee">Retour aux moments de la journée</Link>
+        <Link className="button" href="/recettes/repas">Retour aux repas</Link>
       </div>
     </div>
   )

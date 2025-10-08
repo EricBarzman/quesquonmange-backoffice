@@ -42,13 +42,13 @@ export type Type_plat = {
   created_at: string;
 }
 
-export type Type_repas = {
+export type Ambiance = {
   id: number | null;
   label: string;
   created_at: string;
 }
 
-export type Moment_journee = {
+export type Repas = {
   id: number | null;
   label: string;
   created_at: string;
@@ -83,7 +83,7 @@ export interface PlatComplet {
   cuisson: 'cru' | 'cuit' | 'mi-cuit';
   type_plat: Type_plat;
   ingredients : Ingredient[];
-  moments_journee: Moment_journee[];
+  repas: Repas[];
   couleurs_plat: Couleur_plat[];
   regimes_alimentaire: Regime_alimentaire[];
   saveurs: Saveur[];

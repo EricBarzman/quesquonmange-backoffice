@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import { Type_repas } from "@/types/recettes.types";
-import './type-repas.css';
+import { Repas } from "@/types/recettes.types";
+import './repas.css';
 
-export default function AllTypesPlatTable({ cats }: { cats: Type_repas[] }) {
+export default function AllRepasTable({ cats }: { cats: Repas[] }) {
 
   return (
     <table className="cats__table">
@@ -20,7 +20,7 @@ export default function AllTypesPlatTable({ cats }: { cats: Type_repas[] }) {
             <td className="cats__table__cell">{cat.id}</td>
             <td className="cats__table__cell">{cat.label}</td>
             <td className="cats__table__cell cats__table__cell--link">
-              <Link href={`/recettes/types-de-repas/${cat.id}`}>Voir</Link>
+              <Link href={`/recettes/repas/${cat.id}`}>Voir</Link>
             </td>
           </tr>
         ))}

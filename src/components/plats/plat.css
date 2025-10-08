@@ -26,9 +26,33 @@
   width: 60%;
 }
 
+.cat__form__container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
 .cat__form__label {
-  margin-bottom: 0.5rem;
   font-size: small;
+}
+
+.cat__form__multiple-choices {
+  text-align: center;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 5rem;
+  margin-bottom: 1.5rem;
+}
+
+.cat__form__multiple-choices__option {
+  background-color: lightgrey;
+  padding: 1rem;
+  border-radius: 1rem;
+  cursor: pointer;
+}
+
+.cat__form__multiple-choices__option:hover {
+  background-color: red;
 }
 
 .cat__form__choices {

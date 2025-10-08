@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-import { Moment_journee } from "@/types/recettes.types";
-import './moment.css';
+import { Ambiance } from "@/types/recettes.types";
+import './ambiance.css';
 
-export default function AllMomentsTable({ cats }: { cats: Moment_journee[] }) {
+export default function AllAmbiancesTable({ cats }: { cats: Ambiance[] }) {
 
   return (
     <table className="cats__table">
@@ -20,7 +20,7 @@ export default function AllMomentsTable({ cats }: { cats: Moment_journee[] }) {
             <td className="cats__table__cell">{cat.id}</td>
             <td className="cats__table__cell">{cat.label}</td>
             <td className="cats__table__cell cats__table__cell--link">
-              <Link href={`/recettes/moments-journee/${cat.id}`}>Voir</Link>
+              <Link href={`/recettes/ambiances/${cat.id}`}>Voir</Link>
             </td>
           </tr>
         ))}

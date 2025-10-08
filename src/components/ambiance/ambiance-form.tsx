@@ -4,18 +4,18 @@ import { useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { INTENT } from "@/constants/editIntent";
-import './moment.css'
+import './ambiance.css'
 
-import { createMomentAlimentaire, updateMomentAlimentaire } from "@/hooks/moment_journees";
-import { Moment_journee } from "@/types/recettes.types";
+import { createAmbiance, updateAmbiance } from "@/hooks/ambiances";
+import { Ambiance } from "@/types/recettes.types";
 import BackBtn from "../backBtn/BackBtn";
 
 interface Inputs {
   label: string;
 }
 
-export default function MomentForm(
-  { cat, intent }: { cat : Moment_journee, intent: string }
+export default function AmbianceForm(
+  { cat, intent }: { cat : Ambiance, intent: string }
 ) {
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
 
@@ -26,8 +26,8 @@ export default function MomentForm(
     switch (intent) {
       case (INTENT.create):
         try {
-          await createMomentAlimentaire({ label });
-          router.push("/recettes/moments-journee")
+          await createAmbiance({ label });
+          router.push("/recettes/ambiances")
 
         } catch (error) {
           console.error(error);
@@ -35,8 +35,8 @@ export default function MomentForm(
 
       case (INTENT.update):
         try {
-          await updateMomentAlimentaire({ id: cat.id!, label });
-          router.push("/recettes/moments-journee");
+          await updateAmbiance({ id: cat.id!, label });
+          router.push("/recettes/ambiances");
 
         } catch (error) {
           console.error(error);
@@ -46,19 +46,19 @@ export default function MomentForm(
 
   return (
     <div className="cats__container">
-      <h3 className='cats__title'>{intent === 'create' ? 'Ajouter' : 'Editer'} un moment de la journée</h3>
+      <h3 className='cats__title'>{intent === 'create' ? 'Ajouter' : 'Editer'} une ambiance</h3>
       <form className="cat__form" onSubmit={handleSubmit(onSubmit)}>
         <label className='cat__form__label'>Label</label>
         <input
           className="cat__form__field"
           type="text"
-          placeholder="Petit-déjeuner..."
+          placeholder="Festive, familiale..."
           {...register("label")}
           defaultValue={cat.label}
         />
         <input type="submit" className="cat__form__field" />
       </form>
-      <BackBtn url="moments-journee" label="moments de la journée" />
+      <BackBtn url="ambiances" label="ambiances" />
     </div>
   )
 }

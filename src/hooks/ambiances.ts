@@ -1,24 +1,24 @@
 'use server';
 
 import { createClient } from "@/supabase/client";
-import { Type_repas } from "@/types/recettes.types";
+import { Ambiance } from "@/types/recettes.types";
 
-export const getAllTypesRepas = async (): Promise<Type_repas[]> => {
+export const getAllAmbiances = async (): Promise<Ambiance[]> => {
   const supabase = createClient();
 
   const { data, error } = await (await supabase)
-    .from('type_repas')
+    .from('ambiance')
     .select('*')
 
   if (error) throw new Error(`Error fetching items: ${error}`);
   return data || [];
 };
 
-export const getTypeRepasById = async (id: number): Promise<Type_repas> => {
+export const getAmbianceById = async (id: number): Promise<Ambiance> => {
   const supabase = createClient();
 
   const { data, error } = await (await supabase)
-    .from('type_repas')
+    .from('ambiance')
     .select('*')
     .eq('id', id)
     .single()
@@ -27,16 +27,16 @@ export const getTypeRepasById = async (id: number): Promise<Type_repas> => {
   return data || [];
 };
 
-export const createTypeRepas = async ({ label }: { label: string }) => {
+export const createAmbiance = async ({ label }: { label: string }) => {
   const supabase = createClient();
   const { error } = await (await supabase)
-    .from('type_repas')
+    .from('ambiance')
     .insert({ label })
 
   if (error) throw new Error(`Error creating item: ${error}`);
 }
 
-export const updateTypeRepas = async (
+export const updateAmbiance = async (
   {
     id, label
   }: {
@@ -46,7 +46,7 @@ export const updateTypeRepas = async (
 ) => {
   const supabase = createClient();
   const { error } = await (await supabase)
-    .from('type_repas')
+    .from('ambiance')
     .update({
       label,
     })
@@ -55,10 +55,10 @@ export const updateTypeRepas = async (
   if (error) throw new Error(`Error creating item: ${error}`);
 }
 
-export const deleteTypeRepas = async (id: number) => {
+export const deleteAmbiance = async (id: number) => {
   const supabase = createClient();
   const { error } = await (await supabase)
-    .from('type_repas')
+    .from('ambiance')
     .delete()
     .match({ id })
 

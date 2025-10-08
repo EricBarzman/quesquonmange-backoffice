@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-import { Type_repas } from "@/types/recettes.types"
-import { deleteTypeRepas } from "@/hooks/types_repas";
+import { Ambiance } from "@/types/recettes.types"
+import { deleteAmbiance } from "@/hooks/ambiances";
 
-import './type-repas.css'
+import './ambiance.css'
 
-export default function OneTypeRepasTable({ cat }: { cat: Type_repas }) {
+export default function OneAmbianceTable({ cat }: { cat: Ambiance }) {
 
   const router = useRouter();
 
@@ -16,9 +16,9 @@ export default function OneTypeRepasTable({ cat }: { cat: Type_repas }) {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
 
     try {
-      await deleteTypeRepas(cat.id!);
+      await deleteAmbiance(cat.id!);
       alert("Article supprimé");
-      router.push("/recettes/types-de-repas");
+      router.push("/recettes/ambiances");
       
     } catch (error) {
       console.error(error);
@@ -45,11 +45,11 @@ export default function OneTypeRepasTable({ cat }: { cat: Type_repas }) {
         </tbody>
       </table>
       <div className="cats__one-cat__options">
-        <Link className="cats__table__editbtn" href={`/recettes/types-de-repas/edit/${cat.id}`}>
+        <Link className="cats__table__editbtn" href={`/recettes/ambiances/edit/${cat.id}`}>
           Editer
         </Link>
         <div className="cats__table__deleteBtn" onClick={handleDelete}>Supprimer</div>
-        <Link className="button" href="/recettes/types-de-repas">Retour aux types de repas</Link>
+        <Link className="button" href="/recettes/ambiances">Retour aux ambiances</Link>
       </div>
     </div>
   )
