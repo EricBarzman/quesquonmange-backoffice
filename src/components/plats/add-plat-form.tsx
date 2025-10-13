@@ -10,7 +10,7 @@ import './plat.css'
 import { Cuisson, CUISSONS } from "@/constants/cuissons";
 import { Saison, SAISONS } from "@/constants/saisons";
 
-import { Couleur_plat, Repas, Type_plat } from "@/types/recettes.types";
+import { Couleur_plat, Regime_alimentaire, Repas, Type_plat } from "@/types/recettes.types";
 import { createPlat } from "@/hooks/plats";
 
 
@@ -30,15 +30,18 @@ interface Inputs {
 export default function AddPlatForm({
   types_plat,
   repas,
-  couleurs
+  couleurs,
+  regimes,
 }: {
   types_plat: Type_plat[],
   repas: Repas[],
   couleurs: Couleur_plat[],
+  regimes: Regime_alimentaire[],
 }) {
 
   const [chosenRepas, setChosenRepas] = useState<Repas[]>([]);
   const [chosenCouleurs, setChosenCouleurs] = useState<Couleur_plat[]>([]);
+  const [chosenRegimes, setChosenRegimes] = useState<Regime_alimentaire[]>([]);
   const [cuissons, setCuissons] = useState<Cuisson[]>([])
   const [saisons, setSaisons] = useState<Saison[]>([])
   
@@ -54,6 +57,11 @@ export default function AddPlatForm({
     if (targetCouleur) setChosenCouleurs([...chosenCouleurs, targetCouleur])
   }
 
+  function handleRegimeChange(e: any) {
+    const targetRegime = regimes.find(el => el.id === parseInt(e.target.value));
+    if (targetRegime) setChosenRegimes([...chosenRegimes, targetRegime])
+  }
+
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async ({
@@ -62,13 +70,15 @@ export default function AddPlatForm({
   }) => {
 
     try {
-      await createPlat({
+      //await createPlat({
+      console.log({
         label,
         cuissons,
         saisons,
         type_plat_id,
         list_repas_id : chosenRepas.map(repas => repas.id!),
         couleurs_id : chosenCouleurs.map(couleur => couleur.id!),
+        regimes_alimentaire : chosenRegimes.map(regime => regime.id!),
       });
       // router.push("/recettes/plats")
 
@@ -221,6 +231,36 @@ export default function AddPlatForm({
                 className="cat__form__multiple-choices__option"
               >
                 {couleur.label[0].toUpperCase() + couleur.label.substring(1)}
+              </button>
+            ))}
+          </ul>
+        </div>
+        
+        {/* Régimes */}
+        <div className="cat__form__container">
+          <label className='cat__form__label'>Régime</label>
+          <select
+            defaultValue={""}
+            onChange={handleRegimeChange}
+            className="cat__form__field"
+          >
+            <option disabled value="">-- Choisir un régime --</option>
+            {regimes.map(regime => (
+              <option key={regime.id} disabled={chosenRegimes.includes(regime)} value={regime.id!}>
+                {regime.label[0].toUpperCase() + regime.label.substring(1)}
+              </option>
+            ))}
+          </select>
+          
+          <ul className="cat__form__multiple-choices">
+            {chosenRegimes.map(regime => (
+              <button
+                value={regime.id!}
+                onClick={(e: any) => setChosenRegimes(chosenRegimes.filter(el => el.id !== parseInt(e.target.value)))}
+                key={regime.label}
+                className="cat__form__multiple-choices__option"
+              >
+                {regime.label[0].toUpperCase() + regime.label.substring(1)}
               </button>
             ))}
           </ul>
