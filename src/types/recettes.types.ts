@@ -79,13 +79,13 @@ export interface PlatComplet {
   created_at : string;
   label: string;
   slug: string;
-  saison: 'printemps' | 'été' | 'automne' | 'hiver';
-  cuisson: 'cru' | 'cuit' | 'mi-cuit';
+  saison: ['printemps' | 'été' | 'automne' | 'hiver'] | [];
+  cuisson: ['cru' | 'cuit' | 'mi-cuit'] | [];
   type_plat: Type_plat;
-  ingredients : Ingredient[];
-  repas: Repas[];
-  couleurs_plat: Couleur_plat[];
-  regimes_alimentaire: Regime_alimentaire[];
-  saveurs: Saveur[];
-  ustensils: Ustensil[];
+  ingredients : { quantité: string; unité: string; ingredient: Ingredient }[] | [];
+  repas: Repas[] | [];
+  couleurs_plat: Couleur_plat[] | [];
+  regimes_alimentaire: Regime_alimentaire[] | [];
+  saveurs: Saveur[] | [];
+  ustensils: Ustensil[]| [];
 }
