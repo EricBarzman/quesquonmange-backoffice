@@ -57,11 +57,13 @@ export const createPlat = async ({
   saveurs,
   ustensils,
   ingredients,
+  complexite_id,
 }: {
   label: string,
   cuissons: string[] | null;
   saisons: string[] | null;
   type_plat_id: number;
+  complexite_id: number;
   couleurs_id: number[];
   ingredients: IngredientWithQuantityAndUnity[];
   list_repas_id: number[];
@@ -83,7 +85,8 @@ export const createPlat = async ({
       slug,
       cuisson: cuissons,
       saison: saisons,
-      type_plat: type_plat_id
+      type_plat: type_plat_id,
+      complexite : complexite_id,
     })
     .select('*')
     .single()

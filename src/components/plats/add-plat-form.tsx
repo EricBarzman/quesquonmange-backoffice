@@ -10,7 +10,7 @@ import './plat.css'
 import { Cuisson, CUISSONS } from "@/constants/cuissons";
 import { Saison, SAISONS } from "@/constants/saisons";
 
-import { Couleur_plat, Ingredient, IngredientWithQuantityAndUnity, Regime_alimentaire, Repas, Saveur, Type_plat, Ustensil } from "@/types/recettes.types";
+import { Complexite, Couleur_plat, Ingredient, IngredientWithQuantityAndUnity, Regime_alimentaire, Repas, Saveur, Type_plat, Ustensil } from "@/types/recettes.types";
 import { createPlat } from "@/hooks/plats";
 import IngredientModal from "./ingredients-modal";
 
@@ -25,6 +25,7 @@ interface Inputs {
   regimes_alimentaire_id: number[];
   saveurs_id: number[];
   ustensils_id: number[];
+  complexite_id: number;
 }
 
 
@@ -36,6 +37,7 @@ export default function AddPlatForm({
   saveurs,
   ingredients,
   ustensils,
+  complexites,
 }: {
   types_plat: Type_plat[],
   repas: Repas[],
@@ -44,6 +46,7 @@ export default function AddPlatForm({
   saveurs: Saveur[],
   ingredients: Ingredient[],
   ustensils: Ustensil[],
+  complexites: Complexite[],
 }) {
 
   const [chosenRepas, setChosenRepas] = useState<Repas[]>([]);
@@ -90,6 +93,7 @@ export default function AddPlatForm({
   const onSubmit: SubmitHandler<Inputs> = async ({
     label,
     type_plat_id,
+    complexite_id,
   }) => {
 
     try {
@@ -98,6 +102,7 @@ export default function AddPlatForm({
         cuissons,
         saisons,
         type_plat_id,
+        complexite_id,
         list_repas_id: chosenRepas.map(repas => repas.id!),
         couleurs_id: chosenCouleurs.map(couleur => couleur.id!),
         regimes_alimentaire: chosenRegimes.map(regime => regime.id!),
@@ -105,7 +110,7 @@ export default function AddPlatForm({
         ustensils: chosenUstensils.map(el => el.id!),
         ingredients: chosenIngredientsWithDetails,
       });
-      // router.push("/recettes/plats")
+      router.push("/recettes/plats")
 
     } catch (error) {
       console.error(error);
@@ -192,10 +197,23 @@ export default function AddPlatForm({
         <div className="cat__form__container">
           <label className='cat__form__label'>Type de plat</label>
           <select {...register("type_plat_id")} className="cat__form__field">
-            <option disabled value="">-- Choisir --</option>
+            <option disabled value="">-- Choisir un type --</option>
             {types_plat.map(plat => (
               <option key={plat.id} value={plat.id!}>
                 {plat.label[0].toUpperCase() + plat.label.substring(1)}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* Complexité */}
+        <div className="cat__form__container">
+          <label className='cat__form__label'>Complexité du plat</label>
+          <select {...register("complexite_id")} className="cat__form__field">
+            <option disabled value="">-- Choisir une difficulté --</option>
+            {complexites.map(complex => (
+              <option key={complex.id} value={complex.id!}>
+                {complex.label[0].toUpperCase() + complex.label.substring(1)}
               </option>
             ))}
           </select>

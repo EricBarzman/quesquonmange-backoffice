@@ -1,4 +1,5 @@
 import AddPlatForm from '@/components/plats/add-plat-form';
+import { getComplexites } from '@/hooks/complexites';
 import { getCouleursPlat } from '@/hooks/couleurs_plat';
 import { getIngredients } from '@/hooks/ingredients';
 import { getRegimesAlimentaire } from '@/hooks/regimes_alimentaire';
@@ -16,6 +17,7 @@ export default async function AddRegime() {
   const saveurs = await getSaveurs();
   const ustensils = await getAllUstensils();
   const ingredients = await getIngredients();
+  const complexites = await getComplexites();
 
   return (
       <AddPlatForm
@@ -26,6 +28,7 @@ export default async function AddRegime() {
         saveurs={saveurs}
         ustensils={ustensils}
         ingredients={ingredients}
+        complexites={complexites}
       />
   )
 }

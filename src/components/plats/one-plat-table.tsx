@@ -17,9 +17,9 @@ export default function OnePlatTable({ cat }: { cat: PlatComplet }) {
 
     try {
       alert("Fonction à définir")
-      // await deleteIngredient(cat.id!);
-      // alert("Plat supprimée");
-      // router.push("/recettes/ingredients");
+      await deletePlat(cat.id!);
+      alert("Plat supprimé");
+      router.push("/recettes/plats");
 
     } catch (error) {
       console.error(error);
