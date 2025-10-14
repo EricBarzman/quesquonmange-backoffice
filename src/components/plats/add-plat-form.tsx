@@ -10,8 +10,9 @@ import './plat.css'
 import { Cuisson, CUISSONS } from "@/constants/cuissons";
 import { Saison, SAISONS } from "@/constants/saisons";
 
-import { Couleur_plat, Ingredient, Regime_alimentaire, Repas, Saveur, Type_plat, Ustensil } from "@/types/recettes.types";
+import { Couleur_plat, Ingredient, IngredientWithQuantityAndUnity, Regime_alimentaire, Repas, Saveur, Type_plat, Ustensil } from "@/types/recettes.types";
 import { createPlat } from "@/hooks/plats";
+import IngredientModal from "./ingredients-modal";
 
 
 interface Inputs {
@@ -50,13 +51,13 @@ export default function AddPlatForm({
   const [chosenRegimes, setChosenRegimes] = useState<Regime_alimentaire[]>([]);
   const [chosenSaveurs, setChosenSaveurs] = useState<Saveur[]>([]);
   const [chosenUstensils, setChosenUstensils] = useState<Ustensil[]>([]);
-  
-  // A implémenter
-  const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([]);
-  
+
+  const [chosenIngredientsWithDetails, setChosenIngredientsWithDetails] = useState<IngredientWithQuantityAndUnity[]>([]);
+  const [showModalIngredient, setShowModalIngredient] = useState(false);
+
   const [cuissons, setCuissons] = useState<Cuisson[]>([])
   const [saisons, setSaisons] = useState<Saison[]>([])
-  
+
   const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
 
   function handleRepasChange(e: any) {
@@ -92,18 +93,17 @@ export default function AddPlatForm({
   }) => {
 
     try {
-      //await createPlat({
-      console.log({
+      await createPlat({
         label,
         cuissons,
         saisons,
         type_plat_id,
-        list_repas_id : chosenRepas.map(repas => repas.id!),
-        couleurs_id : chosenCouleurs.map(couleur => couleur.id!),
-        regimes_alimentaire : chosenRegimes.map(regime => regime.id!),
-        saveurs : chosenSaveurs.map(el => el.id!),
-        ustensils : chosenUstensils.map(el => el.id!),
-        // ingredients : chosenIngredients,
+        list_repas_id: chosenRepas.map(repas => repas.id!),
+        couleurs_id: chosenCouleurs.map(couleur => couleur.id!),
+        regimes_alimentaire: chosenRegimes.map(regime => regime.id!),
+        saveurs: chosenSaveurs.map(el => el.id!),
+        ustensils: chosenUstensils.map(el => el.id!),
+        ingredients: chosenIngredientsWithDetails,
       });
       // router.push("/recettes/plats")
 
@@ -138,7 +138,7 @@ export default function AddPlatForm({
           >
             <option disabled value="">-- Choisir un type de cuisson --</option>
             {CUISSONS.map(cuisson => (
-              <option disabled={cuissons.includes(cuisson)} value={cuisson}>
+              <option key={cuisson} disabled={cuissons.includes(cuisson)} value={cuisson}>
                 {cuisson[0].toUpperCase() + cuisson.substring(1)}
               </option>
             ))}
@@ -168,12 +168,12 @@ export default function AddPlatForm({
           >
             <option disabled value="">-- Choisir une saison --</option>
             {SAISONS.map(saison => (
-              <option disabled={saisons.includes(saison)} value={saison}>
+              <option key={saison} disabled={saisons.includes(saison)} value={saison}>
                 {saison[0].toUpperCase() + saison.substring(1)}
               </option>
             ))}
           </select>
-          
+
           <ul className="cat__form__multiple-choices">
             {saisons.map(saison => (
               <button
@@ -216,7 +216,7 @@ export default function AddPlatForm({
               </option>
             ))}
           </select>
-          
+
           <ul className="cat__form__multiple-choices">
             {chosenRepas.map(repas => (
               <button
@@ -246,7 +246,7 @@ export default function AddPlatForm({
               </option>
             ))}
           </select>
-          
+
           <ul className="cat__form__multiple-choices">
             {chosenCouleurs.map(couleur => (
               <button
@@ -260,7 +260,7 @@ export default function AddPlatForm({
             ))}
           </ul>
         </div>
-        
+
         {/* Régimes */}
         <div className="cat__form__container">
           <label className='cat__form__label'>Régimes</label>
@@ -276,7 +276,7 @@ export default function AddPlatForm({
               </option>
             ))}
           </select>
-          
+
           <ul className="cat__form__multiple-choices">
             {chosenRegimes.map(regime => (
               <button
@@ -306,7 +306,7 @@ export default function AddPlatForm({
               </option>
             ))}
           </select>
-          
+
           <ul className="cat__form__multiple-choices">
             {chosenSaveurs.map(saveur => (
               <button
@@ -336,7 +336,7 @@ export default function AddPlatForm({
               </option>
             ))}
           </select>
-          
+
           <ul className="cat__form__multiple-choices">
             {chosenUstensils.map(ustensil => (
               <button
@@ -350,6 +350,42 @@ export default function AddPlatForm({
             ))}
           </ul>
         </div>
+
+        {/* Ingredients */}
+        <div className="cat__form__container">
+          <label className='cat__form__label'>Liste des ingrédients</label>
+          <button
+            className="button cats__btn"
+            type="button"
+            onClick={() => setShowModalIngredient(true)}
+          >
+            Ajouter un ingrédient
+          </button>
+
+          <ul className="cat__form__multiple-choices">
+            {chosenIngredientsWithDetails.map(ingredientWithDetail => (
+              <button
+                value={ingredientWithDetail.ingredient.id!}
+                onClick={(e: any) => setChosenIngredientsWithDetails(
+                  chosenIngredientsWithDetails.filter(el => el.ingredient.id !== parseInt(e.target.value))
+                )}
+                key={ingredientWithDetail.ingredient.label}
+                className="cat__form__multiple-choices__option"
+              >
+                {ingredientWithDetail.quantité} {ingredientWithDetail.unité} {ingredientWithDetail.ingredient.label[0].toUpperCase() + ingredientWithDetail.ingredient.label.substring(1)}
+              </button>
+            ))}
+          </ul>
+        </div>
+
+        {/* Modal ingredients */}
+        {showModalIngredient && 
+        <IngredientModal
+          setChosenIngredientsWithDetails={setChosenIngredientsWithDetails}
+          setShowModalIngredient={setShowModalIngredient}
+          ingredients={ingredients}
+          chosenIngredientsWithDetails={chosenIngredientsWithDetails}
+        />}
 
         <input type="submit" className="cat__form__field" />
       </form>

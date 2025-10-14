@@ -34,6 +34,7 @@
 
 .cat__form__label {
   font-size: small;
+  margin-bottom: 0.5rem;
 }
 
 .cat__form__multiple-choices {
@@ -147,4 +148,57 @@
 .cats__table__deleteBtn:hover {
   background-color: rgb(199, 24, 24);
   transition: 300ms;
+}
+
+
+/* MODALES DES INGREDIENTS */
+
+.modal {
+  width: 100lvw;
+  height: 100lvh;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 3rem;
+}
+
+.modal__container {
+  margin:auto;
+  width: 80%;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 2rem;
+  border: solid 2px;
+}
+
+.modal__headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modal__title {
+  font-size: large;
+  font-weight: 600;
+}
+
+.modal__btn {
+  padding: 1rem;
+  border-radius: 3rem;
+  background-color: rgb(168, 168, 168);
+}
+
+.modal__btn:hover {
+  background-color: grey;
+  transition: 300ms;
+}
+
+.modal__form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin-bottom: 2rem;
 }

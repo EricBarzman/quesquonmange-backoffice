@@ -6,6 +6,12 @@ export type Ingredient = {
   created_at: string;
 }
 
+export type IngredientWithQuantityAndUnity = {
+  quantité: number;
+  unité: string;
+  ingredient: Ingredient
+}
+
 export type Couleur_plat = {
   id: number | null;
   created_at: string;
@@ -82,7 +88,7 @@ export interface PlatComplet {
   saison: ['printemps' | 'été' | 'automne' | 'hiver'] | [];
   cuisson: ['cru' | 'cuit' | 'mi-cuit'] | [];
   type_plat: Type_plat;
-  ingredients : { quantité: string; unité: string; ingredient: Ingredient }[] | [];
+  ingredients : IngredientWithQuantityAndUnity[] | [];
   repas: Repas[] | [];
   couleurs_plat: Couleur_plat[] | [];
   regimes_alimentaire: Regime_alimentaire[] | [];

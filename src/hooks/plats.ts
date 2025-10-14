@@ -1,7 +1,7 @@
 'use server';
 
 import { createClient } from "@/supabase/client";
-import { PlatComplet, PlatSimple } from "@/types/recettes.types";
+import { IngredientWithQuantityAndUnity, PlatComplet, PlatSimple } from "@/types/recettes.types";
 import slugify from "@/utils/slugify";
 
 export const getAllPlats = async (): Promise<PlatSimple[]> => {
@@ -53,23 +53,29 @@ export const createPlat = async ({
   type_plat_id,
   list_repas_id,
   couleurs_id,
+  regimes_alimentaire,
+  saveurs,
+  ustensils,
+  ingredients,
 }: {
   label: string,
   cuissons: string[] | null;
   saisons: string[] | null;
   type_plat_id: number;
   couleurs_id: number[];
-  //ingredients: number[];
+  ingredients: IngredientWithQuantityAndUnity[];
   list_repas_id: number[];
-  // regimes_alimentaire_id: number[];
-  // saveurs_id: number[];
-  // ustensils_id: number[];
+  regimes_alimentaire: number[];
+  saveurs: number[];
+  ustensils: number[];
 }) => {
   const slug = slugify(label);
   if (cuissons!.length === 0) cuissons = null;
   if (saisons!.length === 0) saisons = null;
 
   const supabase = createClient();
+
+  // Create row in plat table
   const { data, error } = await (await supabase)
     .from('plat')
     .insert({
@@ -107,10 +113,56 @@ export const createPlat = async ({
         couleur_id,
         plat_id,
       })
+    if (error) throw new Error(`Error creating item: ${error}`);
+  }
 
+  // Plat has regimes
+  for (const regime_id of regimes_alimentaire) {
+    const { error } = await (await supabase)
+      .from('plat_has_regimes')
+      .insert({
+        regime_id,
+        plat_id,
+      })
+    if (error) throw new Error(`Error creating item: ${error}`);
+  }
+
+  // Plat has saveurs
+  for (const saveur_id of saveurs) {
+    const { error } = await (await supabase)
+      .from('plat_has_saveurs')
+      .insert({
+        saveur_id,
+        plat_id,
+      })
+    if (error) throw new Error(`Error creating item: ${error}`);
+  }
+
+  // Plat requires ustensils
+  for (const ustensil_id of ustensils) {
+    const { error } = await (await supabase)
+      .from('plat_requires_ustensils')
+      .insert({
+        ustensil_id,
+        plat_id,
+      })
+    if (error) throw new Error(`Error creating item: ${error}`);
+  }
+
+  // Plat has ingredients
+  for (const ingredient of ingredients) {
+    const { error } = await (await supabase)
+      .from('plat_has_ingredients')
+      .insert({
+        ingredient_id : ingredient.ingredient.id,
+        plat_id,
+        quantité: ingredient.quantité,
+        unité: ingredient.unité,
+      })
     if (error) throw new Error(`Error creating item: ${error}`);
   }
 }
+
 
 export const updatePlat = async (
   {
