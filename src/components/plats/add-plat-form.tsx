@@ -10,7 +10,7 @@ import './plat.css'
 import { Cuisson, CUISSONS } from "@/constants/cuissons";
 import { Saison, SAISONS } from "@/constants/saisons";
 
-import { Couleur_plat, Regime_alimentaire, Repas, Type_plat } from "@/types/recettes.types";
+import { Couleur_plat, Ingredient, Regime_alimentaire, Repas, Saveur, Type_plat, Ustensil } from "@/types/recettes.types";
 import { createPlat } from "@/hooks/plats";
 
 
@@ -32,16 +32,28 @@ export default function AddPlatForm({
   repas,
   couleurs,
   regimes,
+  saveurs,
+  ingredients,
+  ustensils,
 }: {
   types_plat: Type_plat[],
   repas: Repas[],
   couleurs: Couleur_plat[],
   regimes: Regime_alimentaire[],
+  saveurs: Saveur[],
+  ingredients: Ingredient[],
+  ustensils: Ustensil[],
 }) {
 
   const [chosenRepas, setChosenRepas] = useState<Repas[]>([]);
   const [chosenCouleurs, setChosenCouleurs] = useState<Couleur_plat[]>([]);
   const [chosenRegimes, setChosenRegimes] = useState<Regime_alimentaire[]>([]);
+  const [chosenSaveurs, setChosenSaveurs] = useState<Saveur[]>([]);
+  const [chosenUstensils, setChosenUstensils] = useState<Ustensil[]>([]);
+  
+  // A implémenter
+  const [chosenIngredients, setChosenIngredients] = useState<Ingredient[]>([]);
+  
   const [cuissons, setCuissons] = useState<Cuisson[]>([])
   const [saisons, setSaisons] = useState<Saison[]>([])
   
@@ -62,6 +74,16 @@ export default function AddPlatForm({
     if (targetRegime) setChosenRegimes([...chosenRegimes, targetRegime])
   }
 
+  function handleUstensilChange(e: any) {
+    const target = ustensils.find(el => el.id === parseInt(e.target.value));
+    if (target) setChosenUstensils([...chosenUstensils, target])
+  }
+
+  function handleSaveurChange(e: any) {
+    const target = saveurs.find(el => el.id === parseInt(e.target.value));
+    if (target) setChosenSaveurs([...chosenSaveurs, target])
+  }
+
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async ({
@@ -79,6 +101,9 @@ export default function AddPlatForm({
         list_repas_id : chosenRepas.map(repas => repas.id!),
         couleurs_id : chosenCouleurs.map(couleur => couleur.id!),
         regimes_alimentaire : chosenRegimes.map(regime => regime.id!),
+        saveurs : chosenSaveurs.map(el => el.id!),
+        ustensils : chosenUstensils.map(el => el.id!),
+        // ingredients : chosenIngredients,
       });
       // router.push("/recettes/plats")
 
@@ -184,7 +209,7 @@ export default function AddPlatForm({
             onChange={handleRepasChange}
             className="cat__form__field"
           >
-            <option disabled value="">-- Choisir un repas --</option>
+            <option disabled value="">-- Choisir des repas --</option>
             {repas.map(oneRepas => (
               <option key={oneRepas.id} disabled={chosenRepas.includes(oneRepas)} value={oneRepas.id!}>
                 {oneRepas.label[0].toUpperCase() + oneRepas.label.substring(1)}
@@ -214,7 +239,7 @@ export default function AddPlatForm({
             onChange={handleCouleurChange}
             className="cat__form__field"
           >
-            <option disabled value="">-- Choisir une couleur --</option>
+            <option disabled value="">-- Choisir des couleurs --</option>
             {couleurs.map(couleur => (
               <option key={couleur.id} disabled={chosenCouleurs.includes(couleur)} value={couleur.id!}>
                 {couleur.label[0].toUpperCase() + couleur.label.substring(1)}
@@ -238,13 +263,13 @@ export default function AddPlatForm({
         
         {/* Régimes */}
         <div className="cat__form__container">
-          <label className='cat__form__label'>Régime</label>
+          <label className='cat__form__label'>Régimes</label>
           <select
             defaultValue={""}
             onChange={handleRegimeChange}
             className="cat__form__field"
           >
-            <option disabled value="">-- Choisir un régime --</option>
+            <option disabled value="">-- Choisir des régimes --</option>
             {regimes.map(regime => (
               <option key={regime.id} disabled={chosenRegimes.includes(regime)} value={regime.id!}>
                 {regime.label[0].toUpperCase() + regime.label.substring(1)}
@@ -261,6 +286,66 @@ export default function AddPlatForm({
                 className="cat__form__multiple-choices__option"
               >
                 {regime.label[0].toUpperCase() + regime.label.substring(1)}
+              </button>
+            ))}
+          </ul>
+        </div>
+
+        {/* Saveurs */}
+        <div className="cat__form__container">
+          <label className='cat__form__label'>Saveurs</label>
+          <select
+            defaultValue={""}
+            onChange={handleSaveurChange}
+            className="cat__form__field"
+          >
+            <option disabled value="">-- Choisir des saveurs --</option>
+            {saveurs.map(saveur => (
+              <option key={saveur.id} disabled={chosenSaveurs.includes(saveur)} value={saveur.id!}>
+                {saveur.label[0].toUpperCase() + saveur.label.substring(1)}
+              </option>
+            ))}
+          </select>
+          
+          <ul className="cat__form__multiple-choices">
+            {chosenSaveurs.map(saveur => (
+              <button
+                value={saveur.id!}
+                onClick={(e: any) => setChosenSaveurs(chosenSaveurs.filter(el => el.id !== parseInt(e.target.value)))}
+                key={saveur.label}
+                className="cat__form__multiple-choices__option"
+              >
+                {saveur.label[0].toUpperCase() + saveur.label.substring(1)}
+              </button>
+            ))}
+          </ul>
+        </div>
+
+        {/* Ustensils */}
+        <div className="cat__form__container">
+          <label className='cat__form__label'>Ustensils</label>
+          <select
+            defaultValue={""}
+            onChange={handleUstensilChange}
+            className="cat__form__field"
+          >
+            <option disabled value="">-- Choisir des ustensils --</option>
+            {ustensils.map(us => (
+              <option key={us.id} disabled={chosenUstensils.includes(us)} value={us.id!}>
+                {us.label[0].toUpperCase() + us.label.substring(1)}
+              </option>
+            ))}
+          </select>
+          
+          <ul className="cat__form__multiple-choices">
+            {chosenUstensils.map(ustensil => (
+              <button
+                value={ustensil.id!}
+                onClick={(e: any) => setChosenUstensils(chosenUstensils.filter(el => el.id !== parseInt(e.target.value)))}
+                key={ustensil.label}
+                className="cat__form__multiple-choices__option"
+              >
+                {ustensil.label[0].toUpperCase() + ustensil.label.substring(1)}
               </button>
             ))}
           </ul>
