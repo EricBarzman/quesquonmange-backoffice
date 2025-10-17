@@ -86,7 +86,7 @@ export const createPlat = async ({
       cuisson: cuissons,
       saison: saisons,
       type_plat: type_plat_id,
-      complexite : complexite_id,
+      complexite: complexite_id,
     })
     .select('*')
     .single()
@@ -157,7 +157,7 @@ export const createPlat = async ({
     const { error } = await (await supabase)
       .from('plat_has_ingredients')
       .insert({
-        ingredient_id : ingredient.ingredient.id,
+        ingredient_id: ingredient.ingredient.id,
         plat_id,
         quantité: ingredient.quantité,
         unité: ingredient.unité,
@@ -167,23 +167,86 @@ export const createPlat = async ({
 }
 
 
-export const updatePlat = async (
-  {
-    id, label
-  }: {
-    id: number;
-    label: string;
-  }
-) => {
+export const updatePlat = async ({
+  plat_id,
+  label,
+  cuissons,
+  saisons,
+  type_plat_id,
+  list_repas_id,
+  couleurs_id,
+  regimes_alimentaire,
+  saveurs,
+  ustensils,
+  ingredients,
+  complexite_id,
+}: {
+  plat_id: number,
+  label: string,
+  cuissons: string[] | null;
+  saisons: string[] | null;
+  type_plat_id: number;
+  complexite_id: number;
+  couleurs_id: number[];
+  ingredients: IngredientWithQuantityAndUnity[];
+  list_repas_id: number[];
+  regimes_alimentaire: number[];
+  saveurs: number[];
+  ustensils: number[];
+}) => {
+
+  const slug = slugify(label);
+  if (cuissons!.length === 0) cuissons = null;
+  if (saisons!.length === 0) saisons = null;
+
   const supabase = createClient();
+
+  // Update plat table
   const { error } = await (await supabase)
-    .from('type_plat')
+    .from('plat')
     .update({
       label,
+      slug,
+      cuisson: cuissons,
+      saison: saisons,
+      type_plat: type_plat_id,
+      complexite: complexite_id,
     })
-    .match({ id })
-
+    .match({ id: plat_id })
   if (error) throw new Error(`Error creating item: ${error}`);
+
+  // Plat has couleurs
+  const { data, error: errorCouleur } = await (await supabase)
+    .from('plat_has_couleurs')
+    .select()
+    .eq('plat_id', plat_id)
+  if (errorCouleur) throw new Error(`Error getting item: ${errorCouleur}`);
+
+  // Pour toutes les couleurs de la liste, si pas dans la table, l'ajouter
+  for (const couleur_id of couleurs_id) {
+    if (!data.some(row => row.couleur_id === couleur_id)) {
+      const { error } = await (await supabase)
+        .from('plat_has_couleurs')
+        .insert({
+          couleur_id,
+          plat_id,
+        })
+      if (error) throw new Error(`Error creating item: ${error}`);
+    }
+  }
+
+  // Pour toutes les entrées
+  for (const row of data) {
+    // Si la liste ne contient pas l'entrée, la supprimer
+    if (!couleurs_id.includes(row.couleur_id)) {
+      const { error } = await (await supabase)
+        .from('plat_has_couleurs')
+        .delete()
+        .match({ couleur_id: row.couleur_id })
+
+      if (error) throw new Error(`Error deleting couleur: ${error}`);
+    }
+  }
 }
 
 export const deletePlat = async (id: number) => {

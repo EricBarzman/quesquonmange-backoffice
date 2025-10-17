@@ -1,8 +1,10 @@
+import { Type_ingredient } from "@/constants/types_ingredient";
 
 export type Ingredient = {
   id: number | null;  // null, to pass an empty object for create pages
   label: string;
   description: string;
+  type_ingredient: Type_ingredient;
   created_at: string;
 }
 

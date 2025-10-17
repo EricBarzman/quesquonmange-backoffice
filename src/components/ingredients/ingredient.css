@@ -103,3 +103,35 @@
   background-color: rgb(199, 24, 24);
   transition: 300ms;
 }
+
+/* Pagination */
+
+.pagination__counter {
+  font-weight: 800;
+  margin-bottom: 2rem;
+}
+
+.pagination__container {
+  padding: 1rem;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.pagination__btn {
+  padding: 1rem;
+  color: lightgrey;
+  cursor: pointer;
+  border-radius: 2rem;
+}
+
+.pagination__btn--here {
+  color: grey;
+  background-color: lightgray;
+}
+
+.pagination__arrow {
+  cursor: pointer;
+}

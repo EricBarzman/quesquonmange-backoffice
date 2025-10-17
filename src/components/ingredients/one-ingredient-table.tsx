@@ -33,6 +33,7 @@ export default function OneIngredientTable({ cat }: { cat: Ingredient }) {
             <th className="cats__table__cell">ID</th>
             <th className="cats__table__cell">Label</th>
             <th className="cats__table__cell">Desc.</th>
+            <th className="cats__table__cell">Type</th>
             <th className="cats__table__cell">Created_at</th>
           </tr>
         </thead>
@@ -41,6 +42,7 @@ export default function OneIngredientTable({ cat }: { cat: Ingredient }) {
             <td className="cats__table__cell">{cat.id}</td>
             <td className="cats__table__cell">{cat.label}</td>
             <td className="cats__table__cell">{cat.description}</td>
+            <td className="cats__table__cell">{cat.type_ingredient}</td>
             {/* Convertit la date en string */}
             <td className="cats__table__cell">{(new Date(cat.created_at)).toDateString()}</td>
           </tr>

@@ -1,5 +1,6 @@
 'use server';
 
+import { Type_ingredient } from "@/constants/types_ingredient";
 import { createClient } from "@/supabase/client";
 import { Ingredient } from "@/types/recettes.types";
 import slugify from "@/utils/slugify";
@@ -29,7 +30,7 @@ export const getIngredientById = async (id: number): Promise<Ingredient> => {
 }
 
 export const createIngredient = async (
-  { label, description }: { label: string; description: string }
+  { label, description, type_ingredient }: { label: string; description: string; type_ingredient: Type_ingredient; }
 ) => {
   const slug = slugify(label);
 
@@ -40,6 +41,7 @@ export const createIngredient = async (
       label,
       description,
       slug,
+      type_ingredient
     })
 
   if (error) throw new Error(`Error creating ingredient: ${error}`);
@@ -47,11 +49,12 @@ export const createIngredient = async (
 
 export const updateIngredient = async (
   {
-    id, label, description
+    id, label, description, type_ingredient
   }: {
     id: number;
     label: string;
-    description: string
+    description: string;
+    type_ingredient: Type_ingredient;
   }
 ) => {
   const slug = slugify(label);
@@ -63,6 +66,7 @@ export const updateIngredient = async (
       label,
       description,
       slug,
+      type_ingredient,
     })
     .match({ id })
 

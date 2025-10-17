@@ -16,7 +16,6 @@ export default function OnePlatTable({ cat }: { cat: PlatComplet }) {
     if (!confirm("Êtes-vous sûr de vouloir supprimer cet article ?")) return;
 
     try {
-      alert("Fonction à définir")
       await deletePlat(cat.id!);
       alert("Plat supprimé");
       router.push("/recettes/plats");
@@ -136,7 +135,7 @@ export default function OnePlatTable({ cat }: { cat: PlatComplet }) {
         </tbody>
       </table>
       <div className="cats__one-cat__options">
-        <Link className="cats__table__editbtn" href={`/recettes/ingredients/edit/${cat.id}`}>
+        <Link className="cats__table__editbtn" href={`/recettes/plats/edit/${cat.id}`}>
           Editer
         </Link>
         <div className="cats__table__deleteBtn" onClick={handleDelete}>Supprimer</div>
